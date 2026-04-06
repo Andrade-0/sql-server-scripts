@@ -52,6 +52,18 @@ BEGIN
 	ADD updated_at VARCHAR(100) NULL;
 END;
 
+/* Add a new column 'customer_name' to the 'accounts' table if it does not exist */
+IF NOT EXISTS(
+	SELECT 1 
+	FROM sys.columns
+	WHERE name = 'customer_name'
+	AND object_id = OBJECT_ID('dbo.accounts')
+)
+BEGIN
+	ALTER TABLE dbo.accounts
+	ADD customer_name VARCHAR(255);
+END;
+
 /* Drop the 'name' column from the 'accounts' table if it exists */
 IF EXISTS(
 	SELECT 1 
